@@ -1,0 +1,6 @@
+micronaut:
+  router:
+    static-resources:
+      default:
+        enabled: true
+        paths: "classpath:static/build" # mapping: "/**"

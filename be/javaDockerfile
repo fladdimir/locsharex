@@ -1,0 +1,10 @@
+
+# build fat jar first:
+# gradle clean assemble
+
+FROM adoptopenjdk/openjdk11:slim
+RUN mkdir /opt/app
+COPY heroku/prepare_jdbc_url.sh /opt/app/prepare_jdbc_url.sh
+ENV MICRONAUT_ENVIRONMENTS testAuth,static,heroku,okta
+COPY build/libs/*-all.jar /opt/app/app.jar
+CMD ["/bin/bash", "-c", ". /opt/app/prepare_jdbc_url.sh && java -Xmx256m -jar /opt/app/app.jar"]

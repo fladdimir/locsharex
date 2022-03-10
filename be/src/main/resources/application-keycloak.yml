@@ -1,0 +1,13 @@
+micronaut:
+  security:
+    oauth2:
+      default-provider: keycloak
+      clients:
+        keycloak:
+          client-id: location-sharing
+          client-secret: ${KEYCLOAK_CLIENT_SECRET}
+          openid:
+            issuer: https://localhost:5001/realms/location-sharing/
+            jwks-uri: http://localhost:8080/realms/location-sharing/protocol/openid-connect/certs # https:localhost would require the micronaut-client to trust a self-signed certificate
+            end-session:
+              url: https://localhost:5001/realms/location-sharing/protocol/openid-connect/logout

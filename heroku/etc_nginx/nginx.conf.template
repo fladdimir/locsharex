@@ -1,0 +1,22 @@
+events{}
+
+http {
+
+    include /etc/nginx/mime.types;
+
+    server {
+        # replaced by environment variable:
+        listen ${PORT};
+
+        include redirect_https.conf;
+
+        include /etc/nginx/proxy.conf;
+
+        include /etc/nginx/frontend.conf;
+
+        # backend api
+        location /api/ {
+            proxy_pass http://localhost:8081/api/;
+        }
+    }
+}

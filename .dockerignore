@@ -1,0 +1,11 @@
+*
+# helper
+!heroku
+# be
+!be
+be/build
+be/bin
+# fe
+!fe
+fe/node_modules
+fe/build

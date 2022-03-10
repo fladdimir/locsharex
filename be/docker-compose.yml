@@ -1,0 +1,18 @@
+version: "3"
+
+volumes:
+  postgres_data_be:
+    driver: local
+
+services:
+  postgres_be:
+    image: postgres
+    volumes:
+      - postgres_data_be:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: be
+      POSTGRES_PASSWORD: be
+      POSTGRES_DB: be
+      PGPORT: 5433
+    ports:
+      - 5433:5433

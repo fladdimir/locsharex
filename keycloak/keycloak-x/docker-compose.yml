@@ -1,0 +1,31 @@
+version: "3"
+
+volumes:
+  postgres_data_keycloak_x:
+    driver: local
+
+services:
+  postgres_keycloak_x:
+    image: postgres
+    volumes:
+      - postgres_data_keycloak_x:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+      POSTGRES_DB: keycloak
+      PGPORT: 5432
+    ports:
+      - 5432:5432
+
+  keycloak_x:
+    image: quay.io/keycloak/keycloak-x:latest
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_PASSWORD}
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres_keycloak_x
+    command: --auto-config --proxy=edge --db=postgres -Dkc.db.url.host=postgres_keycloak_x -Dkc.db.url.database=keycloak --db-username=keycloak --db-password=keycloak
+    # proxy=edge sets http-enabled and proxy-address-forwarding
+    # https://github.com/keycloak/keycloak-community/blob/master/design/keycloak.x/configuration.md#proxy-mode

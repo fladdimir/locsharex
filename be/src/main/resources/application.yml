@@ -1,0 +1,48 @@
+micronaut:
+  application:
+    name: location-sharing
+  ssl: # actually unnecessary since behind ssl-reverse-proxy, but currently needed to issue secure cookies
+    # https://github.com/micronaut-projects/micronaut-core/issues/4409
+    port: 8081
+    enabled: true
+    build-self-signed: true
+  server:
+    context-path: /api
+  security:
+    token:
+      jwt:
+        cookie:
+          cookie-same-site: Lax # strict would cause the cookie not to be sent when being redirected to the api/logout from oauth IDP
+          cookie-secure: true # does not (yet) work when behind tls-terminating reverse proxy not supporting downstream ssl-connections (e.g. heroku router) (see link above)
+        signatures:
+          secret:
+            generator:
+              secret: ${JWT_SECRET}
+    authentication: cookie
+    reject-not-found: false
+    endpoints:
+      login.enabled: false # only for testAuth
+      logout:
+        enabled: true
+        get-allowed: true # redirected to after oauth/logout via GET
+    oauth2:
+      login-uri: /api/oauth/login/{provider}
+      callback-uri: /api/oauth/callback/{provider}
+      openid:
+        logout-uri: /api/oauth/logout
+        end-session:
+          redirect-uri: /api/logout
+      # clients: - defined in client-specific config
+
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: validate
+        show_sql: false
+
+flyway:
+  datasources:
+    default:
+      enabled: true

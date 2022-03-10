@@ -1,0 +1,4 @@
+micronaut:
+  security:
+    endpoints:
+      login.enabled: true # POST /api/login

@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    network_mode: host
+    environment:
+      # heroku-like PORT:
+      PORT: 5005
+      # heroku-like DB URL:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+      # avoid ssl parameter when processing DATABASE_URL:
+      CI: "true"
+      MICRONAUT_ENVIRONMENTS: testAuth,heroku
+      JWT_SECRET: abc
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    network_mode: host
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      PGPORT: 5432

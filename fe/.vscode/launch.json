@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      /*
+      chromium --incognito --new-window --remote-debugging-port=9222 https://localhost:5000
+      */
+      "name": "https 5000 Chrome Attach",
+      "type": "chrome",
+      "request": "attach",
+      "url": "http://localhost:5000",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    },
+    {
+      /*
+      chromium --incognito --new-window --remote-debugging-port=9222 https://localhost:3000
+      */
+      "name": "https 3000 Chrome Attach",
+      "type": "chrome",
+      "request": "attach",
+      "url": "http://localhost:3000",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+micronaut:
+  security:
+    oauth2:
+      default-provider: okta
+      clients:
+        okta:
+          enabled: true
+          client-id: ${OKTA_CLIENT_ID}
+          client-secret: ${OKTA_CLIENT_SECRET}
+          openid:
+            issuer: ${OKTA_ISSUER_URL} # e.g. https://dev-xxxxx.okta.com/oauth2/default
+            end-session:
+              enabled: true
+              url: ${OKTA_END_SESSION_URL}

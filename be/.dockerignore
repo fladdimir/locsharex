@@ -1,0 +1,6 @@
+# everything
+**
+# except
+!build/libs/*-all.jar
+!build/native-image/application
+!heroku/**

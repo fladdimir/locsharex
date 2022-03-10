@@ -1,0 +1,3 @@
+{
+  "blockHosts": ["unpkg.com", "*.openstreetmap.org"]
+}
